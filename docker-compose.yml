@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  bookcrossing_main_app:
+    build: ./Bookcrossing_main/
+    ports:
+        - '8080:8080'
+    container_name: bookcrossing_main_app
+    depends_on:
+      - bookcrcossing_postgre_db
+  bookcrcossing_postgre_db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=bookcrossing_db
