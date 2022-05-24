@@ -16,16 +16,12 @@ public class UserModel {
 
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long user_id;
-    @Column(name="firstname")
+    @Column(name="user_id")
+    private long userId;
     private String firstname;
-    @Column(name="lastname")
     private String lastname;
-    @Column(name="login")
     private String login;
-    @Column(name="password")
     private String password;
-    @Column(name="email")
     private String email;
 
 
