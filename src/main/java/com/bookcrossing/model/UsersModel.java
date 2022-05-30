@@ -36,7 +36,7 @@ public class UsersModel {
     @Column(name = "email", length = 50, unique = true, nullable = false)
     private String email;
 
-    @Column(name = "city", length = 50, unique = true, nullable = false)
+    @Column(name = "city", length = 50, nullable = false)
     private String city;
 
     @JsonIgnore

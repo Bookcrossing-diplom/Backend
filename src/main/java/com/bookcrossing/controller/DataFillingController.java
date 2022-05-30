@@ -4,7 +4,7 @@ import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersBooksModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.BookRepository;
-import com.bookcrossing.repository.UserRepository;
+import com.bookcrossing.repository.UsersRepository;
 import com.bookcrossing.repository.UsersBooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class DataFillingController {
 
     @Autowired
-    UserRepository userRepository;
+    UsersRepository usersRepository;
 
     @Autowired
     BookRepository bookRepository;
@@ -33,7 +33,7 @@ public class DataFillingController {
         UsersModel usersModel1 = UsersModel.builder().login("tuda").password("suda").firstname("Тутанхомон").lastname("третий").email("tudasuda@gmail.com").city("Новосибирск").build();
         UsersModel usersModel2 = UsersModel.builder().login("mimika").password("qwe").firstname("Мим").lastname("Денисов").email("mimika9@gmail.com").city("Санкт-Петербург").build();
         UsersModel usersModel3 =UsersModel.builder().login("zxc").password("zxc").firstname("крик").lastname("луны").email("zxc1vs1@gmail.com").city("Челябинск").build();
-        userRepository.saveAll(Arrays.asList(usersModel,usersModel1,usersModel2,usersModel3));
+        usersRepository.saveAll(Arrays.asList(usersModel,usersModel1,usersModel2,usersModel3));
 
         BookModel bookModel = BookModel.builder().name("Война и мир").edition("если есть много свободного времени").yearPublishing("1990").build();
         BookModel bookModel1 = BookModel.builder().name("Отцы и дети").edition("Как же хорошо вернуться домой").yearPublishing("2006").build();
