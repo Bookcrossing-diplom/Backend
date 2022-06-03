@@ -1,5 +1,6 @@
 package com.bookcrossing.controller;
 
+import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
@@ -21,15 +22,15 @@ public class UsersController {
         return ResponseEntity.ok().body(usersService.findById(id));
     }
 
-//    @PutMapping("/update")
-//    public ResponseEntity<UsersDTO> updateInfo(@RequestBody UsersModel usersModel){
-//        return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
-//    }
+    @PutMapping("/update")
+    public ResponseEntity<UsersDTO> updateInfo(@RequestBody UsersModel usersModel){
+        return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
+    }
 
-//    @GetMapping("/{id}/mybook")
-//    public ResponseEntity<List<BookInfo>> findUsersBook(@PathVariable String id){
-//        return ResponseEntity.ok(usersService.findMyBook(Long.parseLong(id)));
-//    }
+    @GetMapping("/{id}/mybook")
+    public ResponseEntity<List<BookModel>> findUsersBook(@PathVariable long id){
+        return ResponseEntity.ok(usersService.findMyBook(id));
+    }
 //
 //    @GetMapping("/{id}/desired")
 //    public ResponseEntity<List<BookInfoAll>> findDesiredUsersBook(@PathVariable String id){
@@ -37,15 +38,15 @@ public class UsersController {
 //    }
 
 
-
-    @PutMapping("/{id}/mybook")
-    public ResponseEntity<List<BookModel>> updateUsersBook(@PathVariable String id, BookModel bookModel){
-        return ResponseEntity.ok(usersService.updateMyBook(Long.parseLong(id), bookModel));
-    }
-
-    @PutMapping("/{id}/desired")
-    public ResponseEntity<List<BookModel>> updateDesiredUsersBook(@PathVariable String id, BookModel bookModel){
-        return ResponseEntity.ok(usersService.updateDesiredUsersBook(Long.parseLong(id), bookModel));
-    }
+//
+//    @PutMapping("/{id}/mybook")
+//    public ResponseEntity<List<BookModel>> updateUsersBook(@PathVariable String id, BookModel bookModel){
+//        return ResponseEntity.ok(usersService.updateMyBook(Long.parseLong(id), bookModel));
+//    }
+//
+//    @PutMapping("/{id}/desired")
+//    public ResponseEntity<List<BookModel>> updateDesiredUsersBook(@PathVariable String id, BookModel bookModel){
+//        return ResponseEntity.ok(usersService.updateDesiredUsersBook(Long.parseLong(id), bookModel));
+//    }
 
 }

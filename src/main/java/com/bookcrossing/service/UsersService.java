@@ -15,9 +15,9 @@ public interface UsersService {
 //    List<BookModel> findMyBook(long id);
 
 //    List<BookInfoAll> findDesiredUsersBook(long id);
-
-    List<BookModel> updateMyBook(long id, BookModel bookModel);
-
-    List<BookModel> updateDesiredUsersBook(long id, BookModel bookModel);
+//
+//    List<BookModel> updateMyBook(long id, BookModel bookModel);
+//
+//    List<BookModel> updateDesiredUsersBook(long id, BookModel bookModel);
 
 }

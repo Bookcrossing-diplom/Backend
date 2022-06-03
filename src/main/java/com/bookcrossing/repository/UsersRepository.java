@@ -1,5 +1,7 @@
 package com.bookcrossing.repository;
 
+import com.bookcrossing.dto.BookDTO;
+import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.dto.UsersDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,17 +10,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 @Transactional
 public interface UsersRepository extends JpaRepository<UsersModel, Long> {
+    //auth & reg user
     UsersModel findByLogin(String login);
-
     boolean existsByLogin(String login);
     boolean existsByEmail(String email);
 
     @Query("select u from UsersModel u where u.id = ?1")
     UsersModel findById(long id);
 
+    //update user
     @Modifying
     @Query("update UsersModel u set u.firstname = ?2 where u.id = ?1")
     void updateFirstname(long id, String firstname);
@@ -30,8 +35,5 @@ public interface UsersRepository extends JpaRepository<UsersModel, Long> {
     @Modifying
     @Query("update UsersModel u set u.city = ?2 where u.id = ?1")
     void updateCity(long id, String city);
-
-
-
 
 }
