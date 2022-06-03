@@ -5,9 +5,11 @@ import com.bookcrossing.model.BookModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface BookMapper {
     BookMapper BOOK_MAPPER = Mappers.getMapper(BookMapper.class);
 
-    BookDTO bookModelToBookDTO(BookModel bookModel);
+    List<BookDTO> bookModelToBookDTO(List<BookModel> bookModel);
 }

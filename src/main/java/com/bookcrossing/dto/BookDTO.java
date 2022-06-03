@@ -1,5 +1,7 @@
 package com.bookcrossing.dto;
 
+import com.bookcrossing.model.CategoryModel;
+import com.bookcrossing.model.GenreModel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +22,8 @@ public class BookDTO {
 
     private Set<AuthorDTO> authors;
 
+    private Set<CategoryDTO> categories;
+
+    private Set<GenreModel> genres;
 
 }

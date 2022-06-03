@@ -24,9 +24,9 @@ public class GenreModel {
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "genres")
-    private Set<CategoryModel> categories = new HashSet<>();
+    private Set<CategoryModel> categories;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "genres")
-    private Set<BookModel> books = new HashSet<>();
+    private Set<BookModel> books;
 }

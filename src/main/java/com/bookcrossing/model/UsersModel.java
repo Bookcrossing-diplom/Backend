@@ -43,7 +43,7 @@ public class UsersModel {
 
     @JsonIgnore
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
-    private List<UsersBooksModel> usersBooks = new LinkedList<>();
+    private List<UsersBooksModel> usersBooks;
 
 }
 

@@ -27,11 +27,10 @@ public class CategoryModel {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
     private Set<BookModel> books = new HashSet<>();
 
-//    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "category_genre",
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<GenreModel> genres = new HashSet<>();
+    private Set<GenreModel> genres;
 
 }

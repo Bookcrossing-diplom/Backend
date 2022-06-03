@@ -61,7 +61,7 @@ public class DataFillingController {
 
         CategoryModel categoryModel = CategoryModel.builder().name("Русская литература").genres(Set.of(genreModel)).build();
         CategoryModel categoryModel1 = CategoryModel.builder().name("Классическая литература").genres(Set.of(genreModel1, genreModel2)).build();
-        CategoryModel categoryModel2 = CategoryModel.builder().name("Ужасы, мистика").genres(Set.of()).build();
+        CategoryModel categoryModel2 = CategoryModel.builder().name("Ужасы, мистика").genres(Set.of(genreModel3, genreModel4)).build();
 
         BookModel bookModel = BookModel.builder().name("Война и мир").edition("если есть много свободного времени").yearPublishing("1990").authors(Set.of(authorModel1)).categories(Set.of(categoryModel)).genres(Set.of(genreModel)).build();
         BookModel bookModel1 = BookModel.builder().name("Отцы и дети").edition("Как же хорошо вернуться домой").yearPublishing("2006").authors(Set.of(authorModel2)).categories(Set.of(categoryModel1)).genres(Set.of(genreModel1)).build();
