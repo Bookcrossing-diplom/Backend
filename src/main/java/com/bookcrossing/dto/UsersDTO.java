@@ -1,8 +1,11 @@
 package com.bookcrossing.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UsersDTO {
     private long id;
 
