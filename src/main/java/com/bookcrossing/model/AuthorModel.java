@@ -36,14 +36,4 @@ public class AuthorModel {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     private Set<BookModel> books = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "AuthorModel{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", country='" + country + '\'' +
-                ", century='" + century + '\'' +
-                '}';
-    }
 }

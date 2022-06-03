@@ -33,7 +33,7 @@ public class UsersServiceImpl implements UsersService {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersModel.getId()));
     }
 
-    public List<BookDTO> findMyBook(long id) {
+    public List<BookModel> findMyBook(long id) {
         List<BookModel> tmp  =  bookRepository.findAllUsersBooks(id);
         List<BookDTO> tmp1 = new ArrayList<>();
         for(BookModel bookModel : tmp){
@@ -42,7 +42,7 @@ public class UsersServiceImpl implements UsersService {
         }
 
         System.out.println();
-        return tmp1;
+        return tmp;
     }
 //
 //    public List<BookInfoAll> findDesiredUsersBook(long id) {

@@ -14,7 +14,6 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode
 @Entity
 @Table(name = "book")
 public class BookModel {
@@ -36,32 +35,21 @@ public class BookModel {
     @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
     private List<UsersBooksModel> usersBooks = new LinkedList<>();
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorModel> authors = new HashSet<>();
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<CategoryModel> categories = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return "BookModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", edition='" + edition + '\'' +
-                ", yearPublishing='" + yearPublishing + '\'' +
-                ", usersBooks=" + usersBooks +
-                ", authors=" + authors +
-                ", categories=" + categories +
-                '}';
-    }
-
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_genre",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<GenreModel> genres = new HashSet<>();
 }
