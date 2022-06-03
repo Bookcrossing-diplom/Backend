@@ -1,8 +1,8 @@
 package com.bookcrossing.controller;
 
+import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
-import com.bookcrossing.repository.UsersPersonalOfficeInfo;
 import com.bookcrossing.service.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,24 +17,26 @@ public class UsersController {
     UsersServiceImpl usersService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsersPersonalOfficeInfo> findById(@PathVariable String id){
-        return ResponseEntity.ok().body(usersService.findById(Long.parseLong(id)));
+    public ResponseEntity<UsersDTO> findById(@PathVariable long id){
+        return ResponseEntity.ok().body(usersService.findById(id));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UsersPersonalOfficeInfo> updateInfo(@RequestBody UsersModel usersModel){
-        return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
-    }
+//    @PutMapping("/update")
+//    public ResponseEntity<UsersDTO> updateInfo(@RequestBody UsersModel usersModel){
+//        return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
+//    }
 
-    @GetMapping("/{id}/mybook")
-    public ResponseEntity<List<BookModel>> findUsersBook(@PathVariable String id){
-        return ResponseEntity.ok(usersService.findMyBook(Long.parseLong(id)));
-    }
+//    @GetMapping("/{id}/mybook")
+//    public ResponseEntity<List<BookInfo>> findUsersBook(@PathVariable String id){
+//        return ResponseEntity.ok(usersService.findMyBook(Long.parseLong(id)));
+//    }
+//
+//    @GetMapping("/{id}/desired")
+//    public ResponseEntity<List<BookInfoAll>> findDesiredUsersBook(@PathVariable String id){
+//        return ResponseEntity.ok(usersService.findDesiredUsersBook(Long.parseLong(id)));
+//    }
 
-    @GetMapping("/{id}/desired")
-    public ResponseEntity<List<BookModel>> findDesiredUsersBook(@PathVariable String id){
-        return ResponseEntity.ok(usersService.findDesiredUsersBook(Long.parseLong(id)));
-    }
+
 
     @PutMapping("/{id}/mybook")
     public ResponseEntity<List<BookModel>> updateUsersBook(@PathVariable String id, BookModel bookModel){

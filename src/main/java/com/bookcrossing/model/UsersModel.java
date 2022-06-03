@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
+import java.util.LinkedList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -41,7 +43,7 @@ public class UsersModel {
 
     @JsonIgnore
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
-    private List<UsersBooksModel> usersBooks;
+    private List<UsersBooksModel> usersBooks = new LinkedList<>();
 
 }
 

@@ -22,6 +22,7 @@ public class AuthenticationRegistrationController {
     public ResponseEntity<Object> auth(@RequestBody AuthModel authModel){
         try {
             long id = authenticationRegistrationService.auth(authModel);
+            String login = authModel.getLogin();
             return ResponseEntity.ok().body(Long.toString(id));
         } catch (UncorrectLoginException e) {
             return ResponseEntity.badRequest().body("Неверный логин:" + authModel.getLogin());
