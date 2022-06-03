@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,6 +45,13 @@ public class UsersModel {
     @JsonIgnore
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
     private List<UsersBooksModel> usersBooks;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_category",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<CategoryModel> categories;
 
 }
 
