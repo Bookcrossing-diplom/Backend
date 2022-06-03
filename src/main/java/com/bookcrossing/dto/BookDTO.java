@@ -19,4 +19,6 @@ public class BookDTO {
     private String yearPublishing;
 
     private Set<AuthorDTO> authors;
+
+
 }
