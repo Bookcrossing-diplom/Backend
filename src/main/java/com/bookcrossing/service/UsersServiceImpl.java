@@ -2,6 +2,7 @@ package com.bookcrossing.service;
 
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
+import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.mapper.UserMapper;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
@@ -10,6 +11,7 @@ import com.bookcrossing.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,10 +33,16 @@ public class UsersServiceImpl implements UsersService {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersModel.getId()));
     }
 
-    public List<BookModel> findMyBook(long id) {
+    public List<BookDTO> findMyBook(long id) {
         List<BookModel> tmp  =  bookRepository.findAllUsersBooks(id);
+        List<BookDTO> tmp1 = new ArrayList<>();
+        for(BookModel bookModel : tmp){
+            BookDTO bookDTO = BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookModel);
+            tmp1.add(bookDTO);
+        }
 
-        return tmp;
+        System.out.println();
+        return tmp1;
     }
 //
 //    public List<BookInfoAll> findDesiredUsersBook(long id) {

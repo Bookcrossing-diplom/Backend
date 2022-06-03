@@ -1,10 +1,7 @@
 package com.bookcrossing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,7 +10,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "author")
 public class AuthorModel {
@@ -38,4 +36,14 @@ public class AuthorModel {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     private Set<BookModel> books = new HashSet<>();
 
+    @Override
+    public String toString() {
+        return "AuthorModel{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", country='" + country + '\'' +
+                ", century='" + century + '\'' +
+                '}';
+    }
 }

@@ -2,10 +2,13 @@ package com.bookcrossing.dto;
 
 import com.bookcrossing.model.BookModel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 public class AuthorDTO {
 
     private long id;
@@ -13,5 +16,7 @@ public class AuthorDTO {
     private String firstname;
 
     private String lastname;
+
+
 
 }

@@ -28,7 +28,7 @@ public class UsersController {
     }
 
     @GetMapping("/{id}/mybook")
-    public ResponseEntity<List<BookModel>> findUsersBook(@PathVariable long id){
+    public ResponseEntity<List<BookDTO>> findUsersBook(@PathVariable long id){
         return ResponseEntity.ok(usersService.findMyBook(id));
     }
 //

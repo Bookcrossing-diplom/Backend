@@ -14,7 +14,6 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     @Query("select b from BookModel b " +
             "inner join UsersBooksModel ub on b.id = ub.bookModel.id " +
             "inner join UsersModel u on u.id = ub.usersModel.id " +
-            "left join b.authors " +
             "where ub.type = 'Мои' and u.id = ?1")
     List<BookModel> findAllUsersBooks(long id);
 
