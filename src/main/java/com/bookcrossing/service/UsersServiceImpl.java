@@ -5,6 +5,7 @@ import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.mapper.UserMapper;
 import com.bookcrossing.model.BookModel;
+import com.bookcrossing.model.CategoryModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.BookRepository;
 import com.bookcrossing.repository.UsersRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -30,6 +32,11 @@ public class UsersServiceImpl implements UsersService {
         if (usersModel.getFirstname() != null){ usersRepository.updateFirstname(usersModel.getId(), usersModel.getFirstname()); }
         if (usersModel.getLastname() != null){ usersRepository.updateLastname(usersModel.getId(), usersModel.getLastname()); }
         if (usersModel.getCity() != null){ usersRepository.updateCity(usersModel.getId(), usersModel.getCity()); }
+        if (usersModel.getEmail() != null){ usersRepository.updateEmail(usersModel.getId(), usersModel.getEmail()); }
+
+        if (usersModel.getCategories() != null){
+//            usersRepository.updateCategory(usersModel.getId(), usersModel.getCategories());
+            }
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersModel.getId()));
     }
 

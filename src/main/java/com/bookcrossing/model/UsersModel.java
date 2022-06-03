@@ -1,10 +1,7 @@
 package com.bookcrossing.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
@@ -15,7 +12,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class UsersModel {
@@ -46,7 +44,6 @@ public class UsersModel {
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
     private List<UsersBooksModel> usersBooks;
 
-    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_category",
             joinColumns = @JoinColumn(name = "user_id"),
