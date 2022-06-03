@@ -33,16 +33,8 @@ public class UsersServiceImpl implements UsersService {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersModel.getId()));
     }
 
-    public List<BookModel> findMyBook(long id) {
-        List<BookModel> tmp  =  bookRepository.findAllUsersBooks(id);
-        List<BookDTO> tmp1 = new ArrayList<>();
-        for(BookModel bookModel : tmp){
-            BookDTO bookDTO = BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookModel);
-            tmp1.add(bookDTO);
-        }
-
-        System.out.println();
-        return tmp;
+    public List<BookDTO> findMyBook(long id) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(id));
     }
 //
 //    public List<BookInfoAll> findDesiredUsersBook(long id) {

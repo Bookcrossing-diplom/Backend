@@ -39,17 +39,17 @@ public class BookModel {
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<AuthorModel> authors = new HashSet<>();
+    private Set<AuthorModel> authors;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private Set<CategoryModel> categories = new HashSet<>();
+    private Set<CategoryModel> categories;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_genre",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<GenreModel> genres = new HashSet<>();
+    private Set<GenreModel> genres;
 }

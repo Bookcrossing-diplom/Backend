@@ -34,6 +34,6 @@ public class AuthorModel {
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
-    private Set<BookModel> books = new HashSet<>();
+    private Set<BookModel> books;
 
 }
