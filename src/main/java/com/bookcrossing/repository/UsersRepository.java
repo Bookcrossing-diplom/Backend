@@ -2,6 +2,7 @@ package com.bookcrossing.repository;
 
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.model.BookModel;
+import com.bookcrossing.model.CategoryModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.dto.UsersDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -36,4 +38,12 @@ public interface UsersRepository extends JpaRepository<UsersModel, Long> {
     @Query("update UsersModel u set u.city = ?2 where u.id = ?1")
     void updateCity(long id, String city);
 
+    @Modifying
+    @Query("update UsersModel u set u.email = ?2 where u.id = ?1")
+    void updateEmail(long id, String email);
+
+//    @Modifying
+//    @Query("update UsersModel u set u.categories = ?2 where u.id = ?1")
+
+//    void updateCategory(long id, Set<CategoryModel> categories);
 }
