@@ -33,6 +33,9 @@ public class DataFillingController {
     @Autowired
     GenreRepository genreRepository;
 
+    @Autowired
+    NewsFeedRepository newsFeedRepository;
+
 
     @GetMapping("/")
     public ResponseEntity<String> fillingData(){
@@ -73,6 +76,15 @@ public class DataFillingController {
         UsersModel usersModel2 = UsersModel.builder().login("mimika").password("qwe").firstname("Мим").lastname("Денисов").email("mimika9@gmail.com").city("Санкт-Петербург").categories(Set.of(categoryModel,categoryModel1)).build();
         UsersModel usersModel3 =UsersModel.builder().login("zxc").password("zxc").firstname("крик").lastname("луны").email("zxc1vs1@gmail.com").city("Челябинск").categories(Set.of(categoryModel2  )).build();
         usersRepository.saveAll(Arrays.asList(usersModel,usersModel1,usersModel2,usersModel3));
+
+        NewsFeedModel newsFeedModel = NewsFeedModel.builder().heading("Bookcrossing").body("YEAHHHHH").dateOfPosting("15/05").build();
+        NewsFeedModel newsFeedModel1 = NewsFeedModel.builder().heading("One more year").body("Let`s celebrate").dateOfPosting("01/01").build();
+        NewsFeedModel newsFeedModel2 = NewsFeedModel.builder().heading("Summer").body("Let`s read somethink").dateOfPosting("01/06").build();
+        newsFeedRepository.saveAll(
+                Arrays.asList((newsFeedModel),
+                (newsFeedModel1),
+                (newsFeedModel2))
+        );
 
         usersBooksRepository.saveAll(
                 Arrays.asList(
