@@ -31,11 +31,17 @@ public class UsersController {
     public ResponseEntity<List<BookDTO>> findUsersBook(@PathVariable long id){
         return ResponseEntity.ok(usersService.findMyBook(id));
     }
-//
-//    @GetMapping("/{id}/desired")
-//    public ResponseEntity<List<BookInfoAll>> findDesiredUsersBook(@PathVariable String id){
-//        return ResponseEntity.ok(usersService.findDesiredUsersBook(Long.parseLong(id)));
-//    }
+
+    @PostMapping("/{id}/addMybook")
+    public ResponseEntity<List<BookDTO>> saveUsersBook(@PathVariable long id,@RequestBody BookModel bookModel){
+        return ResponseEntity.ok(usersService.saveMyBook(id, bookModel));
+    }
+
+    @GetMapping("/{id}/desired")
+    public ResponseEntity<List<BookDTO>> findDesiredUsersBook(@PathVariable String id){
+        return ResponseEntity.ok(usersService.findDesiredUsersBook(Long.parseLong(id)));
+    }
+
 
 
 //

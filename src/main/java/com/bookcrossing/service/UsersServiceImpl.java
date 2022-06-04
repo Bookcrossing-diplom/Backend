@@ -6,8 +6,10 @@ import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.mapper.UserMapper;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.CategoryModel;
+import com.bookcrossing.model.UsersBooksModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.BookRepository;
+import com.bookcrossing.repository.UsersBooksRepository;
 import com.bookcrossing.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    UsersBooksRepository usersBooksRepository;
 
     public UsersDTO findById(long id) {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(id));
@@ -43,10 +48,17 @@ public class UsersServiceImpl implements UsersService {
     public List<BookDTO> findMyBook(long id) {
         return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(id));
     }
-//
-//    public List<BookInfoAll> findDesiredUsersBook(long id) {
-//        return usersRepository.findDesiredUsersBook(id);
-//    }
+
+    public List<BookDTO> findDesiredUsersBook(long id) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersDesiredBooks(id));
+    }
+
+    public List<BookDTO> saveMyBook(long id, BookModel bookModel) {
+
+        bookRepository.save(bookModel);
+        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Мои").build());
+        return findMyBook(id);
+    }
 
 //    public List<BookModel> updateMyBook(long id, BookModel bookModel) {
 //        List<BookModel> bookModels;
