@@ -1,4 +1,4 @@
-package com.bookcrossing.service;
+package com.bookcrossing.service.impl;
 
 import com.bookcrossing.exception.ExistingEmailException;
 import com.bookcrossing.exception.ExistingLoginException;
@@ -7,6 +7,7 @@ import com.bookcrossing.exception.UncorrectPasswordException;
 import com.bookcrossing.model.AuthModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.UsersRepository;
+import com.bookcrossing.service.AuthenticationRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
