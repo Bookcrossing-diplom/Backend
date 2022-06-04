@@ -1,7 +1,5 @@
 package com.bookcrossing.dto;
 
-import com.bookcrossing.model.CategoryModel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

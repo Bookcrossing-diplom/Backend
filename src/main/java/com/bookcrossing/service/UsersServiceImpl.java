@@ -17,7 +17,7 @@ public class UsersServiceImpl implements UsersService {
     UsersRepository usersRepository;
 
     @Autowired
-    BookService bookService;
+    BookServiceImpl bookService;
 
     public UsersDTO findById(long id) {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(id));

@@ -1,7 +1,7 @@
 package com.bookcrossing.controller;
 
 import com.bookcrossing.model.NewsFeedModel;
-import com.bookcrossing.service.NewsFeedService;
+import com.bookcrossing.service.NewsFeedServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,7 @@ import java.util.List;
 public class NewsController {
 
     @Autowired
-    NewsFeedService newsFeedService;
+    NewsFeedServiceImpl newsFeedService;
 
     @GetMapping("/news")
     public ResponseEntity<List<NewsFeedModel>> findAllNewsFeed(){
