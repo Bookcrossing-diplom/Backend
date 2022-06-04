@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +31,10 @@ public class BookModel {
 
     @JsonIgnore
     @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
-    private List<UsersBooksModel> usersBooks = new LinkedList<>();
+    private List<UsersBooksModel> usersBooks;
+
+    @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
+    private List<BookUserRatingModel> bookUserRatings;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",

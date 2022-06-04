@@ -4,6 +4,7 @@ import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
+import com.bookcrossing.service.impl.BookServiceImpl;
 import com.bookcrossing.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
