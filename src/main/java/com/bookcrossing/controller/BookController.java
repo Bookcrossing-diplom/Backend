@@ -32,6 +32,11 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.findAll());
     }
 
+    @GetMapping("/{bookId}")
+    public ResponseEntity<BookForSearchModel> findBook(@PathVariable long bookId){
+        return ResponseEntity.ok().body(bookService.findBook(bookId));
+    }
+
     @PostMapping("/{bookId}/addComment")
     public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
         return ResponseEntity.ok().body(bookService.addComent(bookId, userId, comment));
