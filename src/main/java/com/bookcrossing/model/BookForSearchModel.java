@@ -1,7 +1,5 @@
 package com.bookcrossing.model;
 
-import com.bookcrossing.dto.AuthorDTO;
-import com.bookcrossing.dto.CategoryDTO;
 import lombok.*;
 
 import java.util.List;
@@ -30,5 +28,7 @@ public class BookForSearchModel {
     private Set<GenreModel> genres;
 
     private double rating;
+
+    private List<BookUserCommentModel> bookUserCommentModels;
 
 }

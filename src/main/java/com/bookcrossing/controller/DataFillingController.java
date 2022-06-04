@@ -39,6 +39,9 @@ public class DataFillingController {
     @Autowired
     BookUserRatingRepository bookUserRatingRepository;
 
+    @Autowired
+    BookUserCommentRepository bookUserCommentRepository;
+
 
     @GetMapping("/")
     public ResponseEntity<String> fillingData(){
@@ -120,6 +123,13 @@ public class DataFillingController {
                         BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel2).grade(3).build(),
                         BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel3).grade(4).build()
         ));
+
+        bookUserCommentRepository.saveAll(
+                Arrays.asList(
+                        BookUserCommentModel.builder().bookModel(bookModel).usersModel(usersModel).comment("норм").build(),
+                        BookUserCommentModel.builder().bookModel(bookModel1).usersModel(usersModel1).comment("очень понравилось").build()
+                )
+        );
 
         usersBooksRepository.saveAll(
                 Arrays.asList(

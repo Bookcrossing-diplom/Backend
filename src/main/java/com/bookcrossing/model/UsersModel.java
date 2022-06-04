@@ -42,8 +42,13 @@ public class UsersModel {
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
     private List<UsersBooksModel> usersBooks;
 
+
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
     private List<BookUserRatingModel> bookUserRatings;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
+    private List<BookUserCommentModel> bookUserCommentModels;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_category",
