@@ -62,6 +62,29 @@ public class BookServiceImpl implements BookService {
         return bookForSearchModels;
     }
 
+    public BookForSearchModel findBook(long bookId) {
+        BookModel bookModel = bookRepository.getById(bookId);
+        double tmp = 0;
+        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+        for (BookUserRatingModel bookUserRatingModel : a){
+            tmp += bookUserRatingModel.getGrade();
+        }
+
+        return BookForSearchModel.builder().
+                id(bookModel.getId()).
+                name(bookModel.getName()).
+                edition(bookModel.getEdition()).
+                yearPublishing(bookModel.getYearPublishing()).
+                authors(bookModel.getAuthors()).
+                categories(bookModel.getCategories()).
+                genres(bookModel.getGenres()).
+                rating(
+                        tmp/bookModel.getBookUserRatings().stream().count()
+                ).
+                bookUserCommentModels(bookModel.getBookUserCommentModels()).
+                build();
+    }
+
     public BookForSearchModel addComent(long bookId, long userId, String comment) {
         bookUserCommentRepository.save(BookUserCommentModel.builder().
                 bookModel(bookRepository.getById(bookId)).
