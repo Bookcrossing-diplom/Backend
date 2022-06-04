@@ -22,8 +22,8 @@ public class UsersController {
         return ResponseEntity.ok().body(usersService.findById(id));
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UsersDTO> updateInfo(@RequestBody UsersModel usersModel){
+    @PutMapping("/{id}/update")
+    public ResponseEntity<UsersDTO> updateInfo(@PathVariable long id, @RequestBody UsersModel usersModel){
         return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
     }
 
@@ -37,12 +37,25 @@ public class UsersController {
         return ResponseEntity.ok(usersService.saveMyBook(id, bookModel));
     }
 
-    @GetMapping("/{id}/desired")
-    public ResponseEntity<List<BookDTO>> findDesiredUsersBook(@PathVariable String id){
-        return ResponseEntity.ok(usersService.findDesiredUsersBook(Long.parseLong(id)));
+    @DeleteMapping("/{userId}/deleteMybook")
+    public ResponseEntity<List<BookDTO>> deleteUsersBook(@PathVariable long userId, @RequestParam long bookId){
+        return ResponseEntity.ok().body(usersService.deleteUsersBook(userId, bookId));
     }
 
+    @GetMapping("/{id}/desired")
+    public ResponseEntity<List<BookDTO>> findUsersDesiredBook(@PathVariable String id){
+        return ResponseEntity.ok(usersService.findUsersDesiredBook(Long.parseLong(id)));
+    }
 
+    @PostMapping("/{id}/addDesiredbook")
+    public ResponseEntity<List<BookDTO>> saveUsersDesiredBook(@PathVariable long id,@RequestBody BookModel bookModel) {
+        return ResponseEntity.ok(usersService.saveDesiredBook(id, bookModel));
+    }
+
+    @DeleteMapping("/{userId}/deleteDesiredbook")
+    public ResponseEntity<List<BookDTO>> deleteUsersDesiredBook(@PathVariable long userId, @RequestParam long bookId){
+        return ResponseEntity.ok().body(usersService.deleteUsersDesiredBook(userId, bookId));
+    }
 
 //
 //    @PutMapping("/{id}/mybook")

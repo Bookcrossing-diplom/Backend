@@ -2,21 +2,14 @@ package com.bookcrossing.service;
 
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
-import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.mapper.UserMapper;
 import com.bookcrossing.model.BookModel;
-import com.bookcrossing.model.CategoryModel;
-import com.bookcrossing.model.UsersBooksModel;
 import com.bookcrossing.model.UsersModel;
-import com.bookcrossing.repository.BookRepository;
-import com.bookcrossing.repository.UsersBooksRepository;
 import com.bookcrossing.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -24,10 +17,7 @@ public class UsersServiceImpl implements UsersService {
     UsersRepository usersRepository;
 
     @Autowired
-    BookRepository bookRepository;
-
-    @Autowired
-    UsersBooksRepository usersBooksRepository;
+    BookService bookService;
 
     public UsersDTO findById(long id) {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(id));
@@ -46,28 +36,28 @@ public class UsersServiceImpl implements UsersService {
     }
 
     public List<BookDTO> findMyBook(long id) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(id));
-    }
-
-    public List<BookDTO> findDesiredUsersBook(long id) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersDesiredBooks(id));
+        return bookService.findMyBook(id);
     }
 
     public List<BookDTO> saveMyBook(long id, BookModel bookModel) {
-
-        bookRepository.save(bookModel);
-        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Мои").build());
-        return findMyBook(id);
+        return bookService.saveMyBook(id, bookModel);
     }
 
-//    public List<BookModel> updateMyBook(long id, BookModel bookModel) {
-//        List<BookModel> bookModels;
-//        return null;
-//    }
-//
-//    public List<BookModel> updateDesiredUsersBook(long id, BookModel bookModel) {
-//        return null;
-//    }
+    public List<BookDTO> deleteUsersBook(long userId, long bookId) {
+        return bookService.deleteUsersBook(userId, bookId);
+    }
+
+    public List<BookDTO> findUsersDesiredBook(long id) {
+        return bookService.findUsersDesiredBook(id);
+    }
+
+    public List<BookDTO> saveDesiredBook(long id, BookModel bookModel) {
+        return bookService.saveDesiredBook(id, bookModel);
+    }
+
+    public List<BookDTO> deleteUsersDesiredBook(long userId, long bookId) {
+        return bookService.deleteUsersDesiredBook(userId, bookId);
+    }
 }
 
 
