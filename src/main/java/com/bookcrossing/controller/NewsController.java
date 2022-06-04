@@ -1,7 +1,7 @@
 package com.bookcrossing.controller;
 
 import com.bookcrossing.model.NewsFeedModel;
-import com.bookcrossing.service.NewsFeedServiceImpl;
+import com.bookcrossing.service.impl.NewsFeedServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -6,7 +6,7 @@ import com.bookcrossing.exception.UncorrectLoginException;
 import com.bookcrossing.exception.UncorrectPasswordException;
 import com.bookcrossing.model.AuthModel;
 import com.bookcrossing.model.UsersModel;
-import com.bookcrossing.service.AuthenticationRegistrationServiceImpl;
+import com.bookcrossing.service.impl.AuthenticationRegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

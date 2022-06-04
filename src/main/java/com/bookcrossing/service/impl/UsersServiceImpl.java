@@ -1,4 +1,4 @@
-package com.bookcrossing.service;
+package com.bookcrossing.service.impl;
 
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
@@ -6,6 +6,7 @@ import com.bookcrossing.mapper.UserMapper;
 import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.UsersRepository;
+import com.bookcrossing.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
