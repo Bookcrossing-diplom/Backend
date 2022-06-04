@@ -71,7 +71,7 @@ public class DataFillingController {
         UsersModel usersModel = UsersModel.builder().login("ikyz9").password("123").firstname("Илья").lastname("Кузнецов").email("ikyz9@gmail.com").city("Саратов").categories(Set.of(categoryModel2, categoryModel)).build();
         UsersModel usersModel1 = UsersModel.builder().login("tuda").password("suda").firstname("Тутанхомон").lastname("третий").email("tudasuda@gmail.com").city("Новосибирск").categories(Set.of(categoryModel1)).build();
         UsersModel usersModel2 = UsersModel.builder().login("mimika").password("qwe").firstname("Мим").lastname("Денисов").email("mimika9@gmail.com").city("Санкт-Петербург").categories(Set.of(categoryModel,categoryModel1)).build();
-        UsersModel usersModel3 =UsersModel.builder().login("zxc").password("zxc").firstname("крик").lastname("луны").email("zxc1vs1@gmail.com").city("Челябинск").categories(Set.of(categoryModel2)).build();
+        UsersModel usersModel3 =UsersModel.builder().login("zxc").password("zxc").firstname("крик").lastname("луны").email("zxc1vs1@gmail.com").city("Челябинск").categories(Set.of(categoryModel2  )).build();
         usersRepository.saveAll(Arrays.asList(usersModel,usersModel1,usersModel2,usersModel3));
 
         usersBooksRepository.saveAll(
