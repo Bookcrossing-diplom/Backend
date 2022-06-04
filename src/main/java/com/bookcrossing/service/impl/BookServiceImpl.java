@@ -1,8 +1,11 @@
 package com.bookcrossing.service.impl;
 
+import com.bookcrossing.dto.AuthorDTO;
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.mapper.BookMapper;
+import com.bookcrossing.model.BookForSearchModel;
 import com.bookcrossing.model.BookModel;
+import com.bookcrossing.model.BookUserRatingModel;
 import com.bookcrossing.model.UsersBooksModel;
 import com.bookcrossing.repository.BookRepository;
 import com.bookcrossing.repository.UsersBooksRepository;
@@ -11,7 +14,9 @@ import com.bookcrossing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -25,14 +30,51 @@ public class BookServiceImpl implements BookService {
     @Autowired
     UsersBooksRepository usersBooksRepository;
 
+    public List<BookForSearchModel> findAll() {
+        List<BookModel> bookModels = bookRepository.findAll();
+        ArrayList<BookForSearchModel> bookForSearchModels = new ArrayList<>();
+        double tmp = 0;
+
+        for(BookModel bookModel: bookModels){
+            List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+            for (BookUserRatingModel bookUserRatingModel : a){
+                tmp += bookUserRatingModel.getGrade();
+            }
+
+            bookForSearchModels.add(BookForSearchModel.builder().
+                    id(bookModel.getId()).
+                    name(bookModel.getName()).
+                    edition(bookModel.getEdition()).
+                    yearPublishing(bookModel.getYearPublishing()).
+                    authors(bookModel.getAuthors()).
+                    categories(bookModel.getCategories()).
+                    genres(bookModel.getGenres()).
+                    rating(
+                            tmp/bookModel.getBookUserRatings().stream().count()
+                    ).
+                    build()
+
+            );
+            tmp = 0;
+        }
+        return bookForSearchModels;
+    }
+
+    public List<BookDTO> findByBookName(String bookName) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findByNameContaining(bookName));
+    }
+
     public List<BookDTO> findMyBook(long id) {
         return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(id));
     }
 
     public List<BookDTO> saveMyBook(long id, BookModel bookModel) {
-
-        bookRepository.save(bookModel);
-        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Мои").build());
+        if (bookModel.getId() != 0){
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
+        }else{
+            bookRepository.save(bookModel);
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Мои").build());
+        }
         return findMyBook(id);
     }
 
@@ -47,9 +89,12 @@ public class BookServiceImpl implements BookService {
     }
 
     public List<BookDTO> saveDesiredBook(long id, BookModel bookModel) {
+        if (bookModel.getId() != 0){
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookRepository.getById(bookModel.getId())).type("Желаемые").build());
+        }else{
 
         bookRepository.save(bookModel);
-        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Желаемые").build());
+        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Желаемые").build());}
         return findUsersDesiredBook(id);
     }
 
@@ -57,4 +102,6 @@ public class BookServiceImpl implements BookService {
         usersBooksRepository.deleteUsersDesiredBook(userId, bookId);
         return findUsersDesiredBook(userId);
     }
+
+
 }

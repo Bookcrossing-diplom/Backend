@@ -36,6 +36,9 @@ public class DataFillingController {
     @Autowired
     NewsFeedRepository newsFeedRepository;
 
+    @Autowired
+    BookUserRatingRepository bookUserRatingRepository;
+
 
     @GetMapping("/")
     public ResponseEntity<String> fillingData(){
@@ -85,6 +88,38 @@ public class DataFillingController {
                 (newsFeedModel1),
                 (newsFeedModel2))
         );
+
+        bookUserRatingRepository.saveAll(
+                Arrays.asList(
+                        BookUserRatingModel.builder().bookModel(bookModel).usersModel(usersModel).grade(3).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel).usersModel(usersModel1).grade(2).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel).usersModel(usersModel3).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel1).usersModel(usersModel).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel1).usersModel(usersModel1).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel1).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel1).usersModel(usersModel3).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel2).usersModel(usersModel).grade(2).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel2).usersModel(usersModel1).grade(1).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel2).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel2).usersModel(usersModel3).grade(3).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel4).usersModel(usersModel).grade(3).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel4).usersModel(usersModel1).grade(2).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel4).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel4).usersModel(usersModel3).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel5).usersModel(usersModel).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel5).usersModel(usersModel1).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel5).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel5).usersModel(usersModel3).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel6).usersModel(usersModel).grade(2).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel6).usersModel(usersModel1).grade(1).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel6).usersModel(usersModel2).grade(5).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel6).usersModel(usersModel3).grade(3).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel).grade(4).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel1).grade(4).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel2).grade(3).build(),
+                        BookUserRatingModel.builder().bookModel(bookModel7).usersModel(usersModel3).grade(4).build()
+        ));
 
         usersBooksRepository.saveAll(
                 Arrays.asList(

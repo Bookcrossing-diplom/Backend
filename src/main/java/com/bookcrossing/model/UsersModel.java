@@ -42,6 +42,9 @@ public class UsersModel {
     @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
     private List<UsersBooksModel> usersBooks;
 
+    @OneToMany(mappedBy = "usersModel", cascade = CascadeType.ALL)
+    private List<BookUserRatingModel> bookUserRatings;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_category",
             joinColumns = @JoinColumn(name = "user_id"),
