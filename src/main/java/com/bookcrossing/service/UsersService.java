@@ -17,8 +17,12 @@ public interface UsersService {
 
     List<BookDTO> saveMyBook(long id, BookModel bookModel);
 
-//    List<BookDTO> findDesiredUsersBook(long id);
+    List<BookDTO> deleteUsersBook(long userId, long bookId);
+
+    List<BookDTO> findUsersDesiredBook(long id);
 
     List<BookDTO> saveDesiredBook(long id, BookModel bookModel);
+
+    List<BookDTO> deleteUsersDesiredBook(long userId, long bookId);
 
 }

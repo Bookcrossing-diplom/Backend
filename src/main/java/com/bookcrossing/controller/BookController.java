@@ -3,7 +3,7 @@ package com.bookcrossing.controller;
 import com.bookcrossing.model.AuthorModel;
 import com.bookcrossing.model.CategoryModel;
 import com.bookcrossing.service.AuthorServiceImpl;
-import com.bookcrossing.service.CategoryService;
+import com.bookcrossing.service.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ public class BookController {
     AuthorServiceImpl authorService;
 
     @Autowired
-    CategoryService categoryService;
+    CategoryServiceImpl categoryService;
 
 
     @GetMapping("/category")
