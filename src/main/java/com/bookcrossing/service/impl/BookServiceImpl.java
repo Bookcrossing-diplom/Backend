@@ -3,11 +3,9 @@ package com.bookcrossing.service.impl;
 import com.bookcrossing.dto.AuthorDTO;
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.mapper.BookMapper;
-import com.bookcrossing.model.BookForSearchModel;
-import com.bookcrossing.model.BookModel;
-import com.bookcrossing.model.BookUserRatingModel;
-import com.bookcrossing.model.UsersBooksModel;
+import com.bookcrossing.model.*;
 import com.bookcrossing.repository.BookRepository;
+import com.bookcrossing.repository.BookUserCommentRepository;
 import com.bookcrossing.repository.UsersBooksRepository;
 import com.bookcrossing.repository.UsersRepository;
 import com.bookcrossing.service.BookService;
@@ -29,6 +27,9 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     UsersBooksRepository usersBooksRepository;
+
+    @Autowired
+    BookUserCommentRepository bookUserCommentRepository;
 
     public List<BookForSearchModel> findAll() {
         List<BookModel> bookModels = bookRepository.findAll();
@@ -52,12 +53,41 @@ public class BookServiceImpl implements BookService {
                     rating(
                             tmp/bookModel.getBookUserRatings().stream().count()
                     ).
+                    bookUserCommentModels(bookModel.getBookUserCommentModels()).
                     build()
 
             );
             tmp = 0;
         }
         return bookForSearchModels;
+    }
+
+    public BookForSearchModel addComent(long bookId, long userId, String comment) {
+        bookUserCommentRepository.save(BookUserCommentModel.builder().
+                bookModel(bookRepository.getById(bookId)).
+                usersModel(usersRepository.findById(userId)).
+                comment(comment).
+                build());
+        BookModel bookModel = bookRepository.getById(bookId);
+        double tmp = 0;
+        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+        for (BookUserRatingModel bookUserRatingModel : a){
+            tmp += bookUserRatingModel.getGrade();
+        }
+
+        return BookForSearchModel.builder().
+                id(bookModel.getId()).
+                name(bookModel.getName()).
+                edition(bookModel.getEdition()).
+                yearPublishing(bookModel.getYearPublishing()).
+                authors(bookModel.getAuthors()).
+                categories(bookModel.getCategories()).
+                genres(bookModel.getGenres()).
+                rating(
+                        tmp/bookModel.getBookUserRatings().stream().count()
+                ).
+                bookUserCommentModels(bookModel.getBookUserCommentModels()).
+                build();
     }
 
     public List<BookDTO> findByBookName(String bookName) {

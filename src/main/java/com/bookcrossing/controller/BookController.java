@@ -10,10 +10,7 @@ import com.bookcrossing.service.impl.BookServiceImpl;
 import com.bookcrossing.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,6 +30,11 @@ public class BookController {
     @GetMapping("/")
     public ResponseEntity<List<BookForSearchModel>> findAllBooks(){
         return ResponseEntity.ok().body(bookService.findAll());
+    }
+
+    @PostMapping("/{bookId}/addComment")
+    public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
+        return ResponseEntity.ok().body(bookService.addComent(bookId, userId, comment));
     }
 
     @GetMapping ("/search")

@@ -22,4 +22,6 @@ public interface BookService {
     List<BookForSearchModel> findAll();
 
     List<BookDTO> findByBookName(String bookName);
+
+    BookForSearchModel addComent(long bookId, long userId, String comment);
 }
