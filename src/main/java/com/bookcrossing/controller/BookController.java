@@ -2,8 +2,6 @@ package com.bookcrossing.controller;
 
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.model.AuthorModel;
-import com.bookcrossing.model.BookForSearchModel;
-import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.CategoryModel;
 import com.bookcrossing.service.impl.AuthorServiceImpl;
 import com.bookcrossing.service.impl.BookServiceImpl;
@@ -28,19 +26,19 @@ public class BookController {
     BookServiceImpl bookService;
 
     @GetMapping("/")
-    public ResponseEntity<List<BookForSearchModel>> findAllBooks(){
-        return ResponseEntity.ok().body(bookService.findAll());
+    public ResponseEntity<List<BookDTO>> findAllBooks(){
+        return ResponseEntity.ok().body(bookService.findAllBooks());
     }
 
-    @GetMapping("/{bookId}")
-    public ResponseEntity<BookForSearchModel> findBook(@PathVariable long bookId){
-        return ResponseEntity.ok().body(bookService.findBook(bookId));
-    }
-
-    @PostMapping("/{bookId}/addComment")
-    public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
-        return ResponseEntity.ok().body(bookService.addComent(bookId, userId, comment));
-    }
+//    @GetMapping("/{bookId}")
+//    public ResponseEntity<BookForSearchModel> findBook(@PathVariable long bookId){
+//        return ResponseEntity.ok().body(bookService.findBook(bookId));
+//    }
+//
+//    @PostMapping("/{bookId}/addComment")
+//    public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
+//        return ResponseEntity.ok().body(bookService.addComent(bookId, userId, comment));
+//    }
 
     @GetMapping ("/search")
     ResponseEntity<List<BookDTO>> findByBookName(@RequestParam String bookName){

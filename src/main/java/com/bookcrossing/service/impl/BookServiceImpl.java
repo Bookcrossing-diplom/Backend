@@ -39,11 +39,11 @@ public class BookServiceImpl implements BookService {
     GenreRepository genreRepository;
 
     public List<BookDTO> findByBookName(String bookName) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findByNameContaining(bookName));
+        return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findByNameContaining(bookName));
     }
 
     public List<BookDTO> findUserBooks(long userId) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(userId));
+        return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findAllUsersBooks(userId));
     }
 
     public List<BookDTO> saveUserBook(long userId, BookModel bookModel) {
@@ -62,7 +62,7 @@ public class BookServiceImpl implements BookService {
     }
     
     public List<BookDTO> findUserDesiredBook(long userId) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersDesiredBooks(userId));
+        return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findAllUsersDesiredBooks(userId));
     }
 
     public List<BookDTO> saveDesiredBook(long userId, BookModel bookModel) {
@@ -111,87 +111,105 @@ public class BookServiceImpl implements BookService {
     }
 
 
-    public List<BookForSearchModel> findAll() {
+    public List<BookDTO> findAllBooks() {
         List<BookModel> bookModels = bookRepository.findAll();
-        ArrayList<BookForSearchModel> bookForSearchModels = new ArrayList<>();
+        List<BookDTO> bookDTOs = new ArrayList<>();
         double tmp = 0;
 
-        for(BookModel bookModel: bookModels){
-            List<BookUserRatingModel> a = bookModel.getBookUserRatings();
-            for (BookUserRatingModel bookUserRatingModel : a){
+        for(BookModel bookModel : bookModels ){
+            for (BookUserRatingModel bookUserRatingModel : bookModel.getBookUserRatings()){
                 tmp += bookUserRatingModel.getGrade();
             }
-
-            bookForSearchModels.add(BookForSearchModel.builder().
-                    id(bookModel.getId()).
-                    name(bookModel.getName()).
-                    edition(bookModel.getEdition()).
-                    yearPublishing(bookModel.getYearPublishing()).
-                    authors(bookModel.getAuthors()).
-                    categories(bookModel.getCategories()).
-                    genres(bookModel.getGenres()).
-                    rating(
-                            tmp/bookModel.getBookUserRatings().stream().count()
-                    ).
-                    bookUserCommentModels(bookModel.getBookUserCommentModels()).
-                    build()
-
-            );
+            BookDTO bookDTO = BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookModel);
+            bookDTO.setRating(tmp/bookModel.getBookUserRatings().stream().count());
+            bookDTOs.add(bookDTO);
             tmp = 0;
         }
-        return bookForSearchModels;
+        return bookDTOs;
     }
 
-    public BookForSearchModel findBook(long bookId) {
-        BookModel bookModel = bookRepository.getById(bookId);
-        double tmp = 0;
-        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
-        for (BookUserRatingModel bookUserRatingModel : a){
-            tmp += bookUserRatingModel.getGrade();
-        }
-
-        return BookForSearchModel.builder().
-                id(bookModel.getId()).
-                name(bookModel.getName()).
-                edition(bookModel.getEdition()).
-                yearPublishing(bookModel.getYearPublishing()).
-                authors(bookModel.getAuthors()).
-                categories(bookModel.getCategories()).
-                genres(bookModel.getGenres()).
-                rating(
-                        tmp/bookModel.getBookUserRatings().stream().count()
-                ).
-                bookUserCommentModels(bookModel.getBookUserCommentModels()).
-                build();
-    }
-
-    public BookForSearchModel addComent(long bookId, long userId, String comment) {
-        bookUserCommentRepository.save(BookUserCommentModel.builder().
-                bookModel(bookRepository.getById(bookId)).
-                usersModel(usersRepository.findById(userId)).
-                comment(comment).
-                build());
-        BookModel bookModel = bookRepository.getById(bookId);
-        double tmp = 0;
-        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
-        for (BookUserRatingModel bookUserRatingModel : a){
-            tmp += bookUserRatingModel.getGrade();
-        }
-
-        return BookForSearchModel.builder().
-                id(bookModel.getId()).
-                name(bookModel.getName()).
-                edition(bookModel.getEdition()).
-                yearPublishing(bookModel.getYearPublishing()).
-                authors(bookModel.getAuthors()).
-                categories(bookModel.getCategories()).
-                genres(bookModel.getGenres()).
-                rating(
-                        tmp/bookModel.getBookUserRatings().stream().count()
-                ).
-                bookUserCommentModels(bookModel.getBookUserCommentModels()).
-                build();
-    }
+//    public List<BookDTO> findAllBooks() {
+//        List<BookModel> bookModels = bookRepository.findAll();
+//
+//        ArrayList<BookForSearchModel> bookForSearchModels = new ArrayList<>();
+//        double tmp = 0;
+//
+//        for(BookModel bookModel: bookModels){
+//            List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+//            for (BookUserRatingModel bookUserRatingModel : a){
+//                tmp += bookUserRatingModel.getGrade();
+//            }
+//
+//            bookForSearchModels.add(BookForSearchModel.builder().
+//                    id(bookModel.getId()).
+//                    name(bookModel.getName()).
+//                    edition(bookModel.getEdition()).
+//                    yearPublishing(bookModel.getYearPublishing()).
+//                    authors(bookModel.getAuthors()).
+//                    categories(bookModel.getCategories()).
+//                    genres(bookModel.getGenres()).
+//                    rating(
+//                            tmp/bookModel.getBookUserRatings().stream().count()
+//                    ).
+//                    bookUserCommentModels(bookModel.getBookUserCommentModels()).
+//                    build()
+//
+//            );
+//            tmp = 0;
+//        }
+//        return bookForSearchModels;
+//    }
+//
+//    public BookForSearchModel findBook(long bookId) {
+//        BookModel bookModel = bookRepository.getById(bookId);
+//        double tmp = 0;
+//        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+//        for (BookUserRatingModel bookUserRatingModel : a){
+//            tmp += bookUserRatingModel.getGrade();
+//        }
+//
+//        return BookForSearchModel.builder().
+//                id(bookModel.getId()).
+//                name(bookModel.getName()).
+//                edition(bookModel.getEdition()).
+//                yearPublishing(bookModel.getYearPublishing()).
+//                authors(bookModel.getAuthors()).
+//                categories(bookModel.getCategories()).
+//                genres(bookModel.getGenres()).
+//                rating(
+//                        tmp/bookModel.getBookUserRatings().stream().count()
+//                ).
+//                bookUserCommentModels(bookModel.getBookUserCommentModels()).
+//                build();
+//    }
+//
+//    public BookForSearchModel addComent(long bookId, long userId, String comment) {
+//        bookUserCommentRepository.save(BookUserCommentModel.builder().
+//                bookModel(bookRepository.getById(bookId)).
+//                usersModel(usersRepository.findById(userId)).
+//                comment(comment).
+//                build());
+//        BookModel bookModel = bookRepository.getById(bookId);
+//        double tmp = 0;
+//        List<BookUserRatingModel> a = bookModel.getBookUserRatings();
+//        for (BookUserRatingModel bookUserRatingModel : a){
+//            tmp += bookUserRatingModel.getGrade();
+//        }
+//
+//        return BookForSearchModel.builder().
+//                id(bookModel.getId()).
+//                name(bookModel.getName()).
+//                edition(bookModel.getEdition()).
+//                yearPublishing(bookModel.getYearPublishing()).
+//                authors(bookModel.getAuthors()).
+//                categories(bookModel.getCategories()).
+//                genres(bookModel.getGenres()).
+//                rating(
+//                        tmp/bookModel.getBookUserRatings().stream().count()
+//                ).
+//                bookUserCommentModels(bookModel.getBookUserCommentModels()).
+//                build();
+//    }
 
 
 }

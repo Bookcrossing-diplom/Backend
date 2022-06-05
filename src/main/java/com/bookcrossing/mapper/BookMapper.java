@@ -11,7 +11,9 @@ import java.util.List;
 public interface BookMapper {
     BookMapper BOOK_MAPPER = Mappers.getMapper(BookMapper.class);
 
-    List<BookDTO> bookModelToBookDTO(List<BookModel> bookModel);
+    List<BookDTO> bookModelsToBookDTOs(List<BookModel> bookModel);
 
-    BookModel bookDtoToBookModel(BookDTO bookDTO);
+    BookDTO bookModelToBookDTO(BookModel bookModel);
+
+
 }
