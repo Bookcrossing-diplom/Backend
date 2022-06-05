@@ -1,4 +1,4 @@
-package com.bookcrossing.model;
+package com.bookcrossing.dto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class AuthModel {
+public class AuthorizationDTO {
     private String login;
     private String password;
 }

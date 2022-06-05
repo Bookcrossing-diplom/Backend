@@ -133,10 +133,10 @@ public class DataFillingController {
 
         usersBooksRepository.saveAll(
                 Arrays.asList(
+//                        UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel).type("Мои").build(),
                         UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel3).type("Мои").build(),
                         UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel7).type("Мои").build(),
                         UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel2).type("Мои").build(),
-                        UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel).type("Мои").build(),
                         UsersBooksModel.builder().usersModel(usersModel).bookModel(bookModel6).type("Мои").build(),
 
                         UsersBooksModel.builder().usersModel(usersModel1).bookModel(bookModel).type("Мои").build(),

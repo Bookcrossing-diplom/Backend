@@ -4,7 +4,7 @@ import com.bookcrossing.exception.ExistingEmailException;
 import com.bookcrossing.exception.ExistingLoginException;
 import com.bookcrossing.exception.UncorrectLoginException;
 import com.bookcrossing.exception.UncorrectPasswordException;
-import com.bookcrossing.model.AuthModel;
+import com.bookcrossing.dto.AuthorizationDTO;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.UsersRepository;
 import com.bookcrossing.service.AuthenticationRegistrationService;
@@ -18,10 +18,10 @@ public class AuthenticationRegistrationServiceImpl implements AuthenticationRegi
     @Autowired
     UsersRepository usersRepository;
 
-    public long auth(AuthModel authModel) throws UncorrectPasswordException, UncorrectLoginException {
-        UsersModel usersModel = usersRepository.findByLogin(authModel.getLogin());
+    public long auth(AuthorizationDTO authorizationDTO) throws UncorrectPasswordException, UncorrectLoginException {
+        UsersModel usersModel = usersRepository.findByLogin(authorizationDTO.getLogin());
         if (Objects.isNull(usersModel)) { throw new UncorrectLoginException(); }
-        if (authModel.getPassword().equals(usersModel.getPassword())){ return usersModel.getId(); }
+        if (authorizationDTO.getPassword().equals(usersModel.getPassword())){ return usersModel.getId(); }
         else { throw new UncorrectPasswordException(); }
     }
 

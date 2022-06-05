@@ -4,7 +4,7 @@ import com.bookcrossing.exception.ExistingEmailException;
 import com.bookcrossing.exception.ExistingLoginException;
 import com.bookcrossing.exception.UncorrectLoginException;
 import com.bookcrossing.exception.UncorrectPasswordException;
-import com.bookcrossing.model.AuthModel;
+import com.bookcrossing.dto.AuthorizationDTO;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.service.impl.AuthenticationRegistrationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,12 @@ public class AuthenticationRegistrationController {
     AuthenticationRegistrationServiceImpl authenticationRegistrationService;
 
     @PostMapping("/auth")
-    public ResponseEntity<Object> auth(@RequestBody AuthModel authModel){
+    public ResponseEntity<Object> auth(@RequestBody AuthorizationDTO authorizationDTO){
         try {
-            long id = authenticationRegistrationService.auth(authModel);
-            String login = authModel.getLogin();
+            long id = authenticationRegistrationService.auth(authorizationDTO);
             return ResponseEntity.ok().body(Long.toString(id));
         } catch (UncorrectLoginException e) {
-            return ResponseEntity.badRequest().body("Неверный логин:" + authModel.getLogin());
+            return ResponseEntity.badRequest().body("Неверный логин:" + authorizationDTO.getLogin());
         } catch (UncorrectPasswordException e) {
             return ResponseEntity.badRequest().body("Неверный пароль");
         }
@@ -41,7 +40,5 @@ public class AuthenticationRegistrationController {
             return ResponseEntity.badRequest().body("Данная почта уже существует");
         }
     }
-
-
 
 }

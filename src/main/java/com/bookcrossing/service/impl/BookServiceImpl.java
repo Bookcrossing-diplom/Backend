@@ -4,15 +4,13 @@ import com.bookcrossing.dto.AuthorDTO;
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.model.*;
-import com.bookcrossing.repository.BookRepository;
-import com.bookcrossing.repository.BookUserCommentRepository;
-import com.bookcrossing.repository.UsersBooksRepository;
-import com.bookcrossing.repository.UsersRepository;
+import com.bookcrossing.repository.*;
 import com.bookcrossing.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,6 +28,88 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     BookUserCommentRepository bookUserCommentRepository;
+
+    @Autowired
+    AuthorRepository authorRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
+    GenreRepository genreRepository;
+
+    public List<BookDTO> findByBookName(String bookName) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findByNameContaining(bookName));
+    }
+
+    public List<BookDTO> findUserBooks(long userId) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(userId));
+    }
+
+    public List<BookDTO> saveUserBook(long userId, BookModel bookModel) {
+        if (bookModel.getId() != 0){
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
+        }else{
+            createNewBook(bookModel);
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookModel).type("Мои").build());
+        }
+        return findUserBooks(userId);
+    }
+
+    public List<BookDTO> deleteUserBook(long userId, long bookId) {
+        usersBooksRepository.deleteUsersBook(userId, bookId);
+        return findUserBooks(userId);
+    }
+    
+    public List<BookDTO> findUserDesiredBook(long userId) {
+        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersDesiredBooks(userId));
+    }
+
+    public List<BookDTO> saveDesiredBook(long userId, BookModel bookModel) {
+        if (bookModel.getId() != 0){
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
+        }else{
+            createNewBook(bookModel);
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookModel).type("Желаемые").build());
+        }
+        return findUserBooks(userId);
+    }
+
+    public List<BookDTO> deleteUserDesiredBook(long userId, long bookId) {
+        usersBooksRepository.deleteUsersDesiredBook(userId, bookId);
+        return findUserDesiredBook(userId);
+    }
+
+    private void createNewBook(BookModel bookModel) {
+        Set<AuthorModel> authorModels = new HashSet<>();
+        Set<CategoryModel> categoryModels = new HashSet<>();
+        Set<GenreModel> genreModels  = new HashSet<>();
+
+        for (AuthorModel authorModel : bookModel.getAuthors()){
+            AuthorModel tmp = authorRepository.findByFirstnameAndLastname(authorModel.getFirstname(), authorModel.getLastname());
+            if (tmp != null){ authorModels.add(tmp); }
+            else{ authorModels.add(authorRepository.save(authorModel)); }
+        }
+
+        for (CategoryModel categoryModel : bookModel.getCategories()){
+            CategoryModel tmp = categoryRepository.findByName(categoryModel.getName());
+            if (tmp != null){ categoryModels.add(tmp); }
+            else{ categoryModels.add(categoryRepository.save(categoryModel)); }
+        }
+
+        for (GenreModel genreModel : bookModel.getGenres()){
+            GenreModel tmp = genreRepository.findByName(genreModel.getName());
+            if (tmp != null){ genreModels.add(tmp); }
+            else{ genreModels.add(genreRepository.save(genreModel)); }
+        }
+
+        bookModel.setAuthors(authorModels);
+        bookModel.setCategories(categoryModels);
+        bookModel.setGenres(genreModels);
+
+        bookRepository.save(bookModel);
+    }
+
 
     public List<BookForSearchModel> findAll() {
         List<BookModel> bookModels = bookRepository.findAll();
@@ -111,49 +191,6 @@ public class BookServiceImpl implements BookService {
                 ).
                 bookUserCommentModels(bookModel.getBookUserCommentModels()).
                 build();
-    }
-
-    public List<BookDTO> findByBookName(String bookName) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findByNameContaining(bookName));
-    }
-
-    public List<BookDTO> findMyBook(long id) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersBooks(id));
-    }
-
-    public List<BookDTO> saveMyBook(long id, BookModel bookModel) {
-        if (bookModel.getId() != 0){
-            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
-        }else{
-            bookRepository.save(bookModel);
-            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Мои").build());
-        }
-        return findMyBook(id);
-    }
-
-    public List<BookDTO> deleteUsersBook(long userId, long bookId) {
-        usersBooksRepository.deleteUsersBook(userId, bookId);
-        return findMyBook(userId);
-    }
-
-
-    public List<BookDTO> findUsersDesiredBook(long id) {
-        return BookMapper.BOOK_MAPPER.bookModelToBookDTO(bookRepository.findAllUsersDesiredBooks(id));
-    }
-
-    public List<BookDTO> saveDesiredBook(long id, BookModel bookModel) {
-        if (bookModel.getId() != 0){
-            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookRepository.getById(bookModel.getId())).type("Желаемые").build());
-        }else{
-
-        bookRepository.save(bookModel);
-        usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(id)).bookModel(bookModel).type("Желаемые").build());}
-        return findUsersDesiredBook(id);
-    }
-
-    public List<BookDTO> deleteUsersDesiredBook(long userId, long bookId) {
-        usersBooksRepository.deleteUsersDesiredBook(userId, bookId);
-        return findUsersDesiredBook(userId);
     }
 
 
