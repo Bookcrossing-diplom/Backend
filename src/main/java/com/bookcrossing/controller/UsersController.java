@@ -3,7 +3,6 @@ package com.bookcrossing.controller;
 import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.model.BookModel;
-import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.service.impl.BookServiceImpl;
 import com.bookcrossing.service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,55 +17,47 @@ public class UsersController {
     @Autowired
     UsersServiceImpl usersService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UsersDTO> findById(@PathVariable long id){
-        return ResponseEntity.ok().body(usersService.findById(id));
+    @Autowired
+    BookServiceImpl bookService;
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UsersDTO> findById(@PathVariable long userId){
+        return ResponseEntity.ok().body(usersService.findById(userId));
     }
 
-    @PutMapping("/{id}/update")
-    public ResponseEntity<UsersDTO> updateInfo(@PathVariable long id, @RequestBody UsersModel usersModel){
-        return ResponseEntity.ok().body(usersService.updateInfo(usersModel));
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<UsersDTO> updateUserInfo(@PathVariable long userId, @RequestBody UsersDTO usersDTO){
+        return ResponseEntity.ok().body(usersService.updateUserInfo(usersDTO));
     }
 
-    @GetMapping("/{id}/mybook")
-    public ResponseEntity<List<BookDTO>> findUsersBook(@PathVariable long id){
-        return ResponseEntity.ok(usersService.findMyBook(id));
+    @GetMapping("/{userId}/mybook")
+    public ResponseEntity<List<BookDTO>> findUserBooks(@PathVariable long userId){
+        return ResponseEntity.ok(bookService.findUserBooks(userId));
     }
 
-    @PostMapping("/{id}/addMybook")
-    public ResponseEntity<List<BookDTO>> saveUsersBook(@PathVariable long id,@RequestBody BookModel bookModel){
-        return ResponseEntity.ok(usersService.saveMyBook(id, bookModel));
+    @PostMapping("/{userId}/addMybook")
+    public ResponseEntity<List<BookDTO>> saveUserBooks(@PathVariable long userId, @RequestBody BookModel bookModel){
+        return ResponseEntity.ok(bookService.saveUserBook(userId, bookModel));
     }
 
     @DeleteMapping("/{userId}/deleteMybook")
-    public ResponseEntity<List<BookDTO>> deleteUsersBook(@PathVariable long userId, @RequestParam long bookId){
-        return ResponseEntity.ok().body(usersService.deleteUsersBook(userId, bookId));
+    public ResponseEntity<List<BookDTO>> deleteUserBook(@PathVariable long userId, @RequestParam long bookId){
+        return ResponseEntity.ok().body(bookService.deleteUserBook(userId, bookId));
     }
 
-    @GetMapping("/{id}/desired")
-    public ResponseEntity<List<BookDTO>> findUsersDesiredBook(@PathVariable String id){
-        return ResponseEntity.ok(usersService.findUsersDesiredBook(Long.parseLong(id)));
+    @GetMapping("/{userId}/desired")
+    public ResponseEntity<List<BookDTO>> findUsersDesiredBook(@PathVariable long userId){
+        return ResponseEntity.ok(bookService.findUserDesiredBook(userId));
     }
 
-    @PostMapping("/{id}/addDesiredbook")
-    public ResponseEntity<List<BookDTO>> saveUsersDesiredBook(@PathVariable long id,@RequestBody BookModel bookModel) {
-        return ResponseEntity.ok(usersService.saveDesiredBook(id, bookModel));
+    @PostMapping("/{userId}/addDesiredbook")
+    public ResponseEntity<List<BookDTO>> saveUsersDesiredBook(@PathVariable long userId,  @RequestBody BookModel bookModel) {
+        return ResponseEntity.ok(bookService.saveDesiredBook(userId, bookModel));
     }
 
     @DeleteMapping("/{userId}/deleteDesiredbook")
-    public ResponseEntity<List<BookDTO>> deleteUsersDesiredBook(@PathVariable long userId, @RequestParam long bookId){
-        return ResponseEntity.ok().body(usersService.deleteUsersDesiredBook(userId, bookId));
+    public ResponseEntity<List<BookDTO>> deleteUserDesiredBook(@PathVariable long userId, @RequestParam long bookId){
+        return ResponseEntity.ok().body(bookService.deleteUserDesiredBook(userId, bookId));
     }
-
-//
-//    @PutMapping("/{id}/mybook")
-//    public ResponseEntity<List<BookModel>> updateUsersBook(@PathVariable String id, BookModel bookModel){
-//        return ResponseEntity.ok(usersService.updateMyBook(Long.parseLong(id), bookModel));
-//    }
-//
-//    @PutMapping("/{id}/desired")
-//    public ResponseEntity<List<BookModel>> updateDesiredUsersBook(@PathVariable String id, BookModel bookModel){
-//        return ResponseEntity.ok(usersService.updateDesiredUsersBook(Long.parseLong(id), bookModel));
-//    }
 
 }

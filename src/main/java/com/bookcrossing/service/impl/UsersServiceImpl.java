@@ -1,16 +1,12 @@
 package com.bookcrossing.service.impl;
 
-import com.bookcrossing.dto.BookDTO;
 import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.mapper.UserMapper;
-import com.bookcrossing.model.BookModel;
 import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.UsersRepository;
 import com.bookcrossing.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -20,46 +16,22 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     BookServiceImpl bookService;
 
-    public UsersDTO findById(long id) {
-        return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(id));
+    public UsersDTO findById(long userId) {
+        return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(userId));
     }
 
-    public UsersDTO updateInfo(UsersModel usersModel) {
-        if (usersModel.getFirstname() != null){ usersRepository.updateFirstname(usersModel.getId(), usersModel.getFirstname()); }
-        if (usersModel.getLastname() != null){ usersRepository.updateLastname(usersModel.getId(), usersModel.getLastname()); }
-        if (usersModel.getCity() != null){ usersRepository.updateCity(usersModel.getId(), usersModel.getCity()); }
-        if (usersModel.getEmail() != null){ usersRepository.updateEmail(usersModel.getId(), usersModel.getEmail()); }
+    public UsersDTO updateUserInfo(UsersDTO usersDTO) {
+        if (usersDTO.getFirstname() != null){ usersRepository.updateFirstname(usersDTO.getId(), usersDTO.getFirstname()); }
+        if (usersDTO.getLastname() != null){ usersRepository.updateLastname(usersDTO.getId(), usersDTO.getLastname()); }
+        if (usersDTO.getCity() != null){ usersRepository.updateCity(usersDTO.getId(), usersDTO.getCity()); }
+        if (usersDTO.getEmail() != null){ usersRepository.updateEmail(usersDTO.getId(), usersDTO.getEmail()); }
 
-        if (usersModel.getCategories() != null){
+        if (usersDTO.getCategories() != null){
 //            usersRepository.updateCategory(usersModel.getId(), usersModel.getCategories());
             }
-        return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersModel.getId()));
+        return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(usersDTO.getId()));
     }
 
-    public List<BookDTO> findMyBook(long id) {
-        return bookService.findMyBook(id);
-    }
-
-    public List<BookDTO> saveMyBook(long id, BookModel bookModel) {
-
-        return bookService.saveMyBook(id, bookModel);
-    }
-
-    public List<BookDTO> deleteUsersBook(long userId, long bookId) {
-        return bookService.deleteUsersBook(userId, bookId);
-    }
-
-    public List<BookDTO> findUsersDesiredBook(long id) {
-        return bookService.findUsersDesiredBook(id);
-    }
-
-    public List<BookDTO> saveDesiredBook(long id, BookModel bookModel) {
-        return bookService.saveDesiredBook(id, bookModel);
-    }
-
-    public List<BookDTO> deleteUsersDesiredBook(long userId, long bookId) {
-        return bookService.deleteUsersDesiredBook(userId, bookId);
-    }
 }
 
 

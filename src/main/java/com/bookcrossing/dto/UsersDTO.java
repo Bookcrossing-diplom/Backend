@@ -1,8 +1,10 @@
 package com.bookcrossing.dto;
 
+import com.bookcrossing.model.UsersBooksModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,4 +23,7 @@ public class UsersDTO {
     private String city;
 
     private Set<CategoryDTO> categories;
+
+    private List<UsersBooksDTO> usersBooks;
+
 }
