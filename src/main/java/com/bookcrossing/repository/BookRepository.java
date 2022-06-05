@@ -24,4 +24,7 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     List<BookModel> findAllUsersDesiredBooks(long id);
 
     List<BookModel> findByNameContaining(String bookName);
+
+    @Query("select b from BookModel b where b.id = ?1")
+    BookModel findById(long id);
 }

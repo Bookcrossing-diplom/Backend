@@ -2,6 +2,7 @@ package com.bookcrossing.service.impl;
 
 import com.bookcrossing.dto.AuthorDTO;
 import com.bookcrossing.dto.BookDTO;
+import com.bookcrossing.dto.BookPageDTO;
 import com.bookcrossing.mapper.BookMapper;
 import com.bookcrossing.model.*;
 import com.bookcrossing.repository.*;
@@ -128,38 +129,20 @@ public class BookServiceImpl implements BookService {
         return bookDTOs;
     }
 
-//    public List<BookDTO> findAllBooks() {
-//        List<BookModel> bookModels = bookRepository.findAll();
-//
-//        ArrayList<BookForSearchModel> bookForSearchModels = new ArrayList<>();
-//        double tmp = 0;
-//
-//        for(BookModel bookModel: bookModels){
-//            List<BookUserRatingModel> a = bookModel.getBookUserRatings();
-//            for (BookUserRatingModel bookUserRatingModel : a){
-//                tmp += bookUserRatingModel.getGrade();
-//            }
-//
-//            bookForSearchModels.add(BookForSearchModel.builder().
-//                    id(bookModel.getId()).
-//                    name(bookModel.getName()).
-//                    edition(bookModel.getEdition()).
-//                    yearPublishing(bookModel.getYearPublishing()).
-//                    authors(bookModel.getAuthors()).
-//                    categories(bookModel.getCategories()).
-//                    genres(bookModel.getGenres()).
-//                    rating(
-//                            tmp/bookModel.getBookUserRatings().stream().count()
-//                    ).
-//                    bookUserCommentModels(bookModel.getBookUserCommentModels()).
-//                    build()
-//
-//            );
-//            tmp = 0;
-//        }
-//        return bookForSearchModels;
-//    }
-//
+    public BookPageDTO findBook(long bookId) {
+        BookModel bookModel = bookRepository.findById(bookId);
+        double tmp = 0;
+
+        for (BookUserRatingModel bookUserRatingModel : bookModel.getBookUserRatings()){
+            tmp += bookUserRatingModel.getGrade();
+        }
+
+        BookPageDTO bookPageDTO = BookMapper.BOOK_MAPPER.bookModelToBookPageDTO(bookModel);
+        bookPageDTO.setRating(tmp/bookModel.getBookUserRatings().stream().count());
+
+        return bookPageDTO;
+    }
+
 //    public BookForSearchModel findBook(long bookId) {
 //        BookModel bookModel = bookRepository.getById(bookId);
 //        double tmp = 0;
@@ -181,8 +164,8 @@ public class BookServiceImpl implements BookService {
 //                ).
 //                bookUserCommentModels(bookModel.getBookUserCommentModels()).
 //                build();
-//    }
-//
+////    }
+
 //    public BookForSearchModel addComent(long bookId, long userId, String comment) {
 //        bookUserCommentRepository.save(BookUserCommentModel.builder().
 //                bookModel(bookRepository.getById(bookId)).
