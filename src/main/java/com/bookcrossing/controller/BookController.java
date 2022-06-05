@@ -35,12 +35,19 @@ public class BookController {
     public ResponseEntity<BookPageDTO> findBook(@PathVariable long bookId){
         return ResponseEntity.ok().body(bookService.findBook(bookId));
     }
-//
-//    @PostMapping("/{bookId}/addComment")
-//    public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
-//        return ResponseEntity.ok().body(bookService.addComent(bookId, userId, comment));
-//    }
 
+    @PostMapping("/{bookId}/addComment")
+    public ResponseEntity<BookPageDTO> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){
+        return ResponseEntity.ok().body(bookService.addComment(bookId, userId, comment));
+    }
+
+    @PostMapping("/{bookId}/addRating")
+    public ResponseEntity<BookPageDTO> addRating(@PathVariable long bookId, @RequestParam long userId, @RequestParam int grade){
+        return ResponseEntity.ok().body(bookService.addRating(bookId, userId, grade));
+    }
+
+
+//добавить лайк и переработать поиск
     @GetMapping ("/search")
     ResponseEntity<List<BookDTO>> findByBookName(@RequestParam String bookName){
         return ResponseEntity.ok().body(bookService.findByBookName(bookName));
