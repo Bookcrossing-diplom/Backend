@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsersBooksDTO {
-
+public class BooksUsersDTO {
     private long id;
-    private BookNameDTO bookModel;
+    private UsersNameDTO usersModel;
     private String type;
 }

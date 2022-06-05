@@ -1,6 +1,7 @@
 package com.bookcrossing.mapper;
 
 import com.bookcrossing.dto.BookDTO;
+import com.bookcrossing.dto.BookPageDTO;
 import com.bookcrossing.model.BookModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,6 +15,9 @@ public interface BookMapper {
     List<BookDTO> bookModelsToBookDTOs(List<BookModel> bookModel);
 
     BookDTO bookModelToBookDTO(BookModel bookModel);
+
+    BookPageDTO bookModelToBookPageDTO(BookModel bookModel);
+
 
 
 }

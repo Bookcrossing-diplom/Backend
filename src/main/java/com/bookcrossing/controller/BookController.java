@@ -1,6 +1,7 @@
 package com.bookcrossing.controller;
 
 import com.bookcrossing.dto.BookDTO;
+import com.bookcrossing.dto.BookPageDTO;
 import com.bookcrossing.model.AuthorModel;
 import com.bookcrossing.model.CategoryModel;
 import com.bookcrossing.service.impl.AuthorServiceImpl;
@@ -30,10 +31,10 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.findAllBooks());
     }
 
-//    @GetMapping("/{bookId}")
-//    public ResponseEntity<BookForSearchModel> findBook(@PathVariable long bookId){
-//        return ResponseEntity.ok().body(bookService.findBook(bookId));
-//    }
+    @GetMapping("/{bookId}")
+    public ResponseEntity<BookPageDTO> findBook(@PathVariable long bookId){
+        return ResponseEntity.ok().body(bookService.findBook(bookId));
+    }
 //
 //    @PostMapping("/{bookId}/addComment")
 //    public ResponseEntity<BookForSearchModel> addComment(@PathVariable long bookId, @RequestParam long userId, @RequestParam String comment){

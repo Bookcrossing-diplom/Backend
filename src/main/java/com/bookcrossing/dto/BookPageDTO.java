@@ -1,11 +1,17 @@
 package com.bookcrossing.dto;
 
+import com.bookcrossing.model.BookUserCommentModel;
 import com.bookcrossing.model.GenreModel;
+import com.bookcrossing.model.UsersBooksModel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Set;
 
-public class BookPageDTO {
+@Getter
+@Setter
+public class BookPageDTO{
 
     private long id;
 
@@ -21,7 +27,10 @@ public class BookPageDTO {
 
     private Set<GenreModel> genres;
 
-    private List<BookUserRatingDTO> bookUserRatings;
+    private double rating;
 
-    private Set<BookUserCommentDTO> bookUserCommentDTOS;
+    private List<BookUserCommentDTO> bookUserCommentModels;
+
+    private List<BooksUsersDTO> usersBooks;
+
 }
