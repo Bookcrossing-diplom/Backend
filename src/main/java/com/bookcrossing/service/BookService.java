@@ -7,7 +7,6 @@ import com.bookcrossing.model.BookModel;
 import java.util.List;
 
 public interface BookService {
-    List<BookDTO> findByBookName(String bookName);
 
     List<BookDTO> findUserBooks(long userId);
 
@@ -24,6 +23,8 @@ public interface BookService {
     List<BookDTO> findAllBooks();
 
     BookPageDTO findBook(long bookId);
+
+    List<BookDTO> findByBookName(String bookName);
 
     BookPageDTO addComment(long bookId, long userId, String comment);
 

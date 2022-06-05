@@ -46,8 +46,6 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.addRating(bookId, userId, grade));
     }
 
-
-//добавить лайк и переработать поиск
     @GetMapping ("/search")
     ResponseEntity<List<BookDTO>> findByBookName(@RequestParam String bookName){
         return ResponseEntity.ok().body(bookService.findByBookName(bookName));

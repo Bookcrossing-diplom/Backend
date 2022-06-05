@@ -41,10 +41,6 @@ public class BookServiceImpl implements BookService {
     @Autowired
     GenreRepository genreRepository;
 
-    public List<BookDTO> findByBookName(String bookName) {
-        return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findByNameContaining(bookName));
-    }
-
     public List<BookDTO> findUserBooks(long userId) {
         return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findAllUsersBooks(userId));
     }
@@ -143,6 +139,10 @@ public class BookServiceImpl implements BookService {
         bookPageDTO.setRating(tmp/bookModel.getBookUserRatings().size());
 
         return bookPageDTO;
+    }
+
+    public List<BookDTO> findByBookName(String bookName) {
+        return BookMapper.BOOK_MAPPER.bookModelsToBookDTOs(bookRepository.findByBookName(bookName));
     }
 
     public BookPageDTO addComment(long bookId, long userId, String comment) {
