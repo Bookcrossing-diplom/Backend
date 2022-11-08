@@ -2,7 +2,6 @@ package com.bookcrossing.service.impl;
 
 import com.bookcrossing.dto.UsersDTO;
 import com.bookcrossing.mapper.UserMapper;
-import com.bookcrossing.model.UsersModel;
 import com.bookcrossing.repository.UsersRepository;
 import com.bookcrossing.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     UsersRepository usersRepository;
 
-    @Autowired
-    BookServiceImpl bookService;
 
     public UsersDTO findById(long userId) {
         return UserMapper.USER_MAPPER.usersToUsersDTO(usersRepository.findById(userId));

@@ -1,0 +1,26 @@
+version: '3.2'
+services:
+  app:
+    build: ./
+    ports:
+        - '8080:8080'
+    container_name: app
+    environment:
+      - spring.datasource.url=jdbc:postgresql://bookcrossing_db:5432/bookcrossing-db
+      - spring.datasource.username=bookuser
+      - spring.datasource.password=123456
+      - spring.jpa.hibernate.ddl-auto=update
+    depends_on:
+      - bookcrossing_db
+
+  bookcrossing_db:
+    image: 'postgres:13.2'
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=bookuser
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=bookcrossing-db
+    volumes:
+      - ./Bookcrossing_main/db/InitPostgres.sql:/docker-entrypoint-initdb.d/InitPostgres.sql
+      # - ./Database/outputData:/var/lib/postgresql/data
