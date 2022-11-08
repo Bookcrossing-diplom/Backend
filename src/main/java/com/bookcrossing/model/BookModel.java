@@ -35,6 +35,10 @@ public class BookModel {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<AuthorModel> authors;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
+    private List<UsersBooksModel> usersBooks;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_category",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -47,9 +51,7 @@ public class BookModel {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<GenreModel> genres;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
-    private List<UsersBooksModel> usersBooks;
+
 
     @OneToMany(mappedBy = "bookModel", cascade = CascadeType.ALL)
     private List<BookUserRatingModel> bookUserRatings;

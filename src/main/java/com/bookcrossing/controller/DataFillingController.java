@@ -123,7 +123,8 @@ public class DataFillingController {
 
         bookUserCommentRepository.saveAll(
                 Arrays.asList(
-                        BookUserCommentModel.builder().bookModel(bookModel).usersModel(usersModel).comment("очень приятная серия, хорошая плотная обложка, одна из самых прочных среди книг в мягких переплётах, бумага плотная, шрифт не мизерный. про содержание и говорить не стоит - это классика, обязательная к прочтению.").build(),
+                        BookUserCommentModel.builder().bookModel(bookModel).usersModel(usersModel).comment("Безусловно шедевр. Насколько я могу вообще судить, эту книгу. Это книга, непросто величайший труд автора, но и великий дар для следующих поколений. В ней можно многое почерпнуть, она и актуальна и сегодня. ").build(),
+                        BookUserCommentModel.builder().bookModel(bookModel).usersModel(usersModel).comment("Интересно. Смотришь на многие моменты с другой стороны, и понимаешь, что перечитав ее несколько раз, будешь находить и открывать для себя каждый раз что то новое.").build(),
                         BookUserCommentModel.builder().bookModel(bookModel).usersModel(usersModel3).comment("Читается тяжело, на любителя. В школе этого произведения не читала, но и не жалею. Просто хочу для себя прочесть.").build(),
                         BookUserCommentModel.builder().bookModel(bookModel5).usersModel(usersModel3).comment("Великолепная классика в отличном оформлении! История такая душевная, пронзительная и цепляющая. Только перечитывать и перечитывать").build(),
                         BookUserCommentModel.builder().bookModel(bookModel5).usersModel(usersModel2).comment("Проза Шолохова не нуждается в особом представлении: чувственная, пронзительная, трогательная. В книгу входит ряд рассказов и повестей автора").build()

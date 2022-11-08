@@ -9,5 +9,4 @@ public class BookUserCommentDTO {
     private long id;
     private UsersNameDTO usersModel;
     private String comment;
-
 }

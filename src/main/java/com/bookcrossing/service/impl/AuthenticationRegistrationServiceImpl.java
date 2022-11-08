@@ -20,16 +20,25 @@ public class AuthenticationRegistrationServiceImpl implements AuthenticationRegi
 
     public long auth(AuthorizationDTO authorizationDTO) throws UncorrectPasswordException, UncorrectLoginException {
         UsersModel usersModel = usersRepository.findByLogin(authorizationDTO.getLogin());
-        if (Objects.isNull(usersModel)) { throw new UncorrectLoginException(); }
-        if (authorizationDTO.getPassword().equals(usersModel.getPassword())){ return usersModel.getId(); }
-        else { throw new UncorrectPasswordException(); }
+        if (Objects.isNull(usersModel)) {
+            throw new UncorrectLoginException();
+        }
+        if (authorizationDTO.getPassword().equals(usersModel.getPassword())){
+            return usersModel.getId();
+        }
+        else {
+            throw new UncorrectPasswordException();
+        }
     }
 
     public long reg(UsersModel usersModel) throws ExistingLoginException, ExistingEmailException {
-        if (usersRepository.existsByLogin(usersModel.getLogin())){ throw new ExistingLoginException();}
-        if (usersRepository.existsByEmail(usersModel.getEmail())){ throw new ExistingEmailException();}
+        if (usersRepository.existsByLogin(usersModel.getLogin())){
+            throw new ExistingLoginException();
+        }
+        if (usersRepository.existsByEmail(usersModel.getEmail())){
+            throw new ExistingEmailException();
+        }
         return usersRepository.save(usersModel).getId();
-
     }
 
 }

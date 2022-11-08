@@ -47,10 +47,12 @@ public class BookServiceImpl implements BookService {
 
     public List<BookDTO> saveUserBook(long userId, BookModel bookModel) {
         if (bookModel.getId() != 0){
-            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).
+                    bookModel(bookRepository.getById(bookModel.getId())).type("Мои").build());
         }else{
             createNewBook(bookModel);
-            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).bookModel(bookModel).type("Мои").build());
+            usersBooksRepository.save(UsersBooksModel.builder().usersModel(usersRepository.findById(userId)).
+                    bookModel(bookModel).type("Мои").build());
         }
         return findUserBooks(userId);
     }
